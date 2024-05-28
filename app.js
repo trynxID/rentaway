@@ -4,7 +4,6 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 
 // Router
 const indexRouter = require("./routes/index");
@@ -18,20 +17,6 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-
-// Ini buat percobaan
-const test = async () => {
-  await mongoose.connect(
-    "mongodb+srv://sidiq:sidiq1131235@rentaway.plncv6d.mongodb.net/?retryWrites=true&w=majority&appName=rentaway"
-  ),
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-  console.log("Connected to MongoDB!");
-};
-test();
-// Sampe sini
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
