@@ -20,8 +20,10 @@ const createUser = async () => {
     img_url: "http://example.com/johndoe.jpg",
     role: 1,
   });
+  await newUser.save();
+  console.log("User Berhasil Dibuat");
 };
-createUser();
+createUser().catch((err) => console.log(err));
 
 // Router
 
