@@ -21,6 +21,7 @@ const createUser = async () => {
     role: 1,
   });
 };
+createUser();
 
 // Router
 
