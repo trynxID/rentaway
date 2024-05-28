@@ -5,7 +5,25 @@ const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 
+var data = {};
+// Resource
+require("./utils/db");
+const User = require("./models/users");
+const createUser = async () => {
+  const newUser = new User({
+    create_id: mongoose.Types.ObjectId(),
+    update_id: mongoose.Types.ObjectId(),
+    fullname: "John Doe",
+    email: "john.doe@example.com",
+    password: "securepassword",
+    no_phone: "1234567890",
+    img_url: "http://example.com/johndoe.jpg",
+    role: 1,
+  });
+};
+
 // Router
+
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
