@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
 
 var data = {};
 // Resource
@@ -11,8 +12,8 @@ require("./utils/db");
 const User = require("./models/users");
 const createUser = async () => {
   const newUser = new User({
-    create_id: mongoose.Types.ObjectId(),
-    update_id: mongoose.Types.ObjectId(),
+    create_id: new mongoose.Types.ObjectId(),
+    update_id: new mongoose.Types.ObjectId(),
     fullname: "John Doe",
     email: "john.doe@example.com",
     password: "securepassword",
