@@ -28,7 +28,6 @@ const createTenant = async () => {
     console.error("Error creating tenant:", error);
   }
 };
-createTenant();
 
 const createBooking = async () => {
   try {
@@ -65,8 +64,6 @@ const createBooking = async () => {
     console.error("Error creating booking:", error);
   }
 };
-createBooking();
-
 
 // Add user
 // const createUser = async () => {
@@ -150,6 +147,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+createTenant();
+createBooking();
 
 // Handling Invalid Route
 app.use(function (req, res, next) {
