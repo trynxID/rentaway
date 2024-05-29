@@ -4,30 +4,81 @@ const express = require("express");
 const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-var data = {};
 // Resource
 require("./utils/db");
 const User = require("./models/users");
-const createUser = async () => {
-  const newUser = new User({
-    create_id: new mongoose.Types.ObjectId(),
-    update_id: new mongoose.Types.ObjectId(),
-    fullname: "John Doe",
-    email: "john.doe@example.com",
-    password: "securepassword",
-    no_phone: "1234567890",
-    img_url: "http://example.com/johndoe.jpg",
-    role: 1,
-  });
-  await newUser.save();
-  console.log("User Berhasil Dibuat");
-};
-createUser().catch((err) => console.log(err));
+const Property = require("./models/properties");
+
+// Add user
+// const createUser = async () => {
+//   const newUser = new User({
+//     fullname: "John Doe",
+//     email: "john.doe@example.com",
+//     password: "securepassword",
+//     no_phone: "1234567890",
+//     img_url: "http://example.com/johndoe.jpg",
+//     role: 2,
+//   });
+//   await newUser.save();
+//   console.log("User Berhasil Dibuat");
+// };
+// createUser().catch((err) => console.log(err));
+
+// Membuat property baru
+// const createProperty = async () => {
+//   try {
+//     // Temukan pengguna dengan peran owner (role 2)
+//     const owner = await User.findOne({
+//       email: "john.doe@example.com",
+//       role: 2,
+//     });
+//     if (!owner) {
+//       console.log("Owner tidak ditemukan");
+//       return;
+//     }
+
+//     const newProperty = new Property({
+//       owner: owner._id,
+//       title: "Beautiful Beach House",
+//       description: "A beautiful beach house with stunning sea views.",
+//       location: {
+//         city: "Miami",
+//         street: "Ocean Drive",
+//         village: "South Beach",
+//         district: "Miami-Dade",
+//         province: "Florida",
+//         country: "USA",
+//       },
+//       price: 500000,
+//       images: [
+//         "http://example.com/images/property1.jpg",
+//         "http://example.com/images/property2.jpg",
+//       ],
+//       category: "house",
+//       details: {
+//         size: 3000, // in square feet
+//         bedrooms: 4,
+//         bathrooms: 3,
+//         facilities: ["Swimming Pool", "Garage", "Gym"],
+//       },
+//       capacity: 8,
+//       availability: {
+//         availableFrom: new Date("2024-06-01"),
+//         availableUntil: new Date("2024-12-31"),
+//       },
+//       status: "available",
+//     });
+//     await newProperty.save();
+//     console.log("Properti Berhasil Dibuat");
+//   } catch (error) {
+//     console.error("Error creating property:", error);
+//   }
+// };
+// createProperty();
 
 // Router
-
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 

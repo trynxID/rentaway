@@ -3,26 +3,6 @@ const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      auto: true,
-    },
-    create_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    create_time: {
-      type: Date,
-      default: Date.now,
-    },
-    update_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      defult: null,
-    },
-    update_time: {
-      type: Date,
-      default: null,
-    },
     fullname: {
       type: String,
       required: true,
