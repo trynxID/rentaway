@@ -12,15 +12,13 @@ const bookingSchema = new mongoose.Schema(
       ref: "Property",
       required: true,
     },
-    create_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    created_at: {
+      type: Date,
+      default: Date.now,
     },
-    update_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    updated_at: {
+      type: Date,
+      default: Date.now,
     },
     start_date: {
       type: Date,
