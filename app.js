@@ -12,6 +12,24 @@ const User = require("./models/users");
 const Property = require("./models/properties");
 const Booking = require("./models/booking");
 
+const createTenant = async () => {
+  try {
+    const newTenant = new User({
+      fullname: "Alice Johnson",
+      email: "alice.johnson@example.com",
+      password: "tenantsecurepassword",
+      no_phone: "1234567890",
+      img_url: "http://example.com/alicejohnson.jpg",
+      role: 1, // Tenant
+    });
+    await newTenant.save();
+    console.log("Tenant Berhasil Dibuat");
+  } catch (error) {
+    console.error("Error creating tenant:", error);
+  }
+};
+createTenant();
+
 const createBooking = async () => {
   try {
     const tenant = await User.findOne({
