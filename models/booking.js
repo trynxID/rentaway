@@ -30,7 +30,6 @@ const bookingSchema = new mongoose.Schema(
     },
     total_amount: {
       type: Number,
-      required: true,
     },
     status: {
       type: Number,
@@ -53,7 +52,9 @@ const bookingSchema = new mongoose.Schema(
 bookingSchema.pre("save", async function (next) {
   const booking = this;
   const oneMonth = 1000 * 60 * 60 * 24 * 30;
-  const durationInMonths = Math.ceil((booking.end_date - booking.start_date) / oneMonth);
+  const durationInMonths = Math.ceil(
+    (booking.end_date - booking.start_date) / oneMonth
+  );
 
   // Temukan properti untuk mendapatkan harga
   const property = await mongoose.model("Property").findById(booking.property);
