@@ -10,6 +10,45 @@ const mongoose = require("mongoose");
 require("./utils/db");
 const User = require("./models/users");
 const Property = require("./models/properties");
+const Booking = require("./models/booking");
+
+const createBooking = async () => {
+  try {
+    const tenant = await User.findOne({
+      email: "alice.johnson@example.com",
+      role: 1,
+    });
+    if (!tenant) {
+      console.log("Tenant tidak ditemukan");
+      return;
+    }
+
+    const property = await Property.findOne({
+      title: "Beautiful Beach House",
+    });
+    if (!property) {
+      console.log("Properti tidak ditemukan");
+      return;
+    }
+
+    const newBooking = new Booking({
+      user: tenant._id,
+      property: property._id,
+      create_id: tenant._id,
+      update_id: tenant._id,
+      start_date: new Date("2024-07-01"),
+      end_date: new Date("2024-08-01"),
+      status: 1, // 1: pending
+    });
+
+    await newBooking.save();
+    console.log("Booking Berhasil Dibuat");
+  } catch (error) {
+    console.error("Error creating booking:", error);
+  }
+};
+createBooking();
+
 
 // Add user
 // const createUser = async () => {
