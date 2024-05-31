@@ -12,14 +12,6 @@ const bookingSchema = new mongoose.Schema(
       ref: "Property",
       required: true,
     },
-    created_at: {
-      type: Date,
-      default: Date.now,
-    },
-    updated_at: {
-      type: Date,
-      default: Date.now,
-    },
     start_date: {
       type: Date,
       required: true,
@@ -37,11 +29,11 @@ const bookingSchema = new mongoose.Schema(
       default: 1,
       required: true,
     },
-    create_time: {
+    created_at: {
       type: Date,
       default: Date.now,
     },
-    update_time: {
+    updated_at: {
       type: Date,
       default: Date.now,
     },
