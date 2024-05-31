@@ -7,7 +7,7 @@ const loginController = require("../controllers").login;
 router.post(
   "/auth",
   [
-    check("email", "Email doesn't valid").isEmail(),
+    check("email", "Invalid Email").isEmail(),
     check("password", "Password is empty").not().isEmpty(),
   ],
   (req, res, next) => {

@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
     },
     img_url: {
       type: String,
+      default: null,
     },
     last_login_time: {
       type: Date,
