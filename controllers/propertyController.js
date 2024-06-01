@@ -92,7 +92,32 @@ const getPropertyById = async (req, res) => {
   }
 };
 
+const updatePropertyById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, price, location, category, details, capacity, availability, status } = req.body;
+
+    // Pastikan data tidak kosong
+    if (!title || !description || !price || !location || !category || !details || !capacity || !availability || !status) {
+      return res.status(400).json({ msg: "Semua data harus diisi" });
+    }
+
+    // Temukan dan perbarui properti berdasarkan ID yang diberikan
+    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, { new: true });
+
+    // Periksa apakah properti ditemukan
+    if (!updatedProperty) {
+      return res.status(404).json({ msg: "Properti tidak ditemukan" });
+    }
+
+    // Kirim pesan respons yang menyatakan bahwa data berhasil diperbarui
+    res.status(200).json({ msg: "Properti berhasil diperbarui", updatedProperty });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
 
 module.exports = {
-  getAllProperties, addProperty, getPropertyById
+  getAllProperties, addProperty, getPropertyById, updatePropertyById
 };

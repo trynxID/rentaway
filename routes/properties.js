@@ -5,6 +5,7 @@ const user = require("../controllers").property;
 
 router.get("/", user.getAllProperties);
 router.post("/add", user.addProperty);
-router.get("/id/:id", user.getPropertyById);
+router.get("/detail/:id", user.getPropertyById);
+router.put("/update/:id", user.updatePropertyById);
 
 module.exports = router;
