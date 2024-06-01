@@ -14,12 +14,12 @@ const auth = async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: "User Not Found" });
+      return res.status(400).json({ msg: "Pengguna tidak tersedia" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: "Invalid Credentials" });
+      return res.status(400).json({ msg: "Password salah" });
     }
 
     const payload = {
@@ -39,7 +39,7 @@ const auth = async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send("Kesalahan server");
   }
 };
 
