@@ -1,5 +1,5 @@
 const User = require("../models/users");
-require("dotenv");
+require("dotenv").config(); // Memastikan dotenv dikonfigurasi dengan benar
 const { validationResult, check } = require("express-validator");
 
 const addUser = [
@@ -14,7 +14,6 @@ const addUser = [
   )
     .isMobilePhone("id-ID")
     .withMessage("Nomor telepon harus dalam format Indonesia"),
-  ,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
