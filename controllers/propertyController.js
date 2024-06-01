@@ -118,6 +118,26 @@ const updatePropertyById = async (req, res) => {
   }
 };
 
+const deletePropertyById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Temukan dan hapus properti berdasarkan ID yang diberikan
+    const deletedProperty = await Property.findByIdAndDelete(id);
+
+    // Periksa apakah properti ditemukan
+    if (!deletedProperty) {
+      return res.status(404).json({ msg: "Properti tidak ditemukan" });
+    }
+
+    // Kirim pesan respons yang menyatakan bahwa properti berhasil dihapus
+    res.status(200).json({ msg: "Properti berhasil dihapus" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
+
 module.exports = {
-  getAllProperties, addProperty, getPropertyById, updatePropertyById
+  getAllProperties, addProperty, getPropertyById, updatePropertyById, deletePropertyById
 };
