@@ -117,3 +117,40 @@ const createBooking = async () => {
 //   }
 // };
 // createProperty();
+
+dibawah ini untuk ngetes register user lewat thunder client
+{
+  "fullname": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword",
+  "no_phone": "1234567890",
+  "img_url": "http://example.com/johndoe.jpg",
+  "role": 1
+}
+
+dibawah ini untuk ngetes add properties lewat thunder client
+{
+  "title": "Villa di Tepi Pantai",
+  "description": "Villa mewah dengan pemandangan laut yang menakjubkan.",
+  "price": 2000000,
+  "location": {
+    "street": "Jalan Pantai No. 123",
+    "city": "Bali",
+    "province": "Bali",
+    "country": "Indonesia"
+  },
+  "category": "house",
+  "details": {
+    "size": 300,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "facilities": ["Kolam Renang", "Taman", "Garasi"]
+  },
+  "capacity": 8,
+  "availability": {
+    "availableFrom": "2024-07-01",
+    "availableUntil": "2024-12-31"
+  },
+  "status": "available",
+  "userId": "665a799f48c71414f937f4c1" // Ganti dengan ID pengguna yang sesuai
+}
