@@ -71,6 +71,28 @@ const addProperty = async (req, res) => {
   }
 };
 
+const getPropertyById = async (req, res) => {
+  try {
+    // Ambil ID properti dari parameter permintaan
+    const { id } = req.params;
+
+    // Temukan properti berdasarkan ID yang diberikan
+    const property = await Property.findById(id);
+
+    // Periksa apakah properti ditemukan
+    if (!property) {
+      return res.status(404).json({ msg: "Properti tidak ditemukan" });
+    }
+
+    // Kirim detail properti sebagai respons
+    res.status(200).json(property);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Kesalahan server");
+  }
+};
+
+
 module.exports = {
-  getAllProperties, addProperty
+  getAllProperties, addProperty, getPropertyById
 };
