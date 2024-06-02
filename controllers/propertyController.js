@@ -9,51 +9,55 @@ const getAllProperties = async (req, res) => {
 };
 
 const addProperty = async (req, res) => {
-  // Validasi input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  // Destructure data properti dari req.body
+  const owner = req.user.id;
   const {
     title,
     description,
     price,
     location,
+    images,
     category,
     details,
     capacity,
     availability,
-    status
+    status,
   } = req.body;
 
   try {
-    // Pastikan data tidak kosong
-    if (!title || !description || !price || !location || !category || !details || !capacity || !availability || !status) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !location ||
+      !category ||
+      !details ||
+      !capacity ||
+      !availability ||
+      !status
+    ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
 
-      // Pastikan userId tersedia di req.body
-      if (!req.body.userId) {
-        return res.status(400).json({ msg: "ID pengguna (userId) diperlukan" });
-      }
-  
-      // Temukan pengguna dengan ID yang diberikan
-      const user = await User.findById(req.body.userId);
-  
-      // Pastikan pengguna dengan ID yang diberikan memiliki peran sebagai pemilik (role 2)
-      if (!user || user.role !== 2) {
-        return res.status(403).json({ msg: "Anda tidak memiliki izin untuk menambahkan properti" });
-      }
+    const user = await User.findById(owner);
+    if (!user || user.role !== 2) {
+      return res
+        .status(403)
+        .json({ msg: "Anda tidak memiliki izin untuk menambahkan properti" });
+    }
 
     // Buat properti baru
     const newProperty = new Property({
-      owner: req.body.userId, // Gunakan userId yang disertakan dalam req.body
+      owner,
       title,
       description,
       price,
       location,
+      images,
       category,
       details,
       capacity,
@@ -61,9 +65,7 @@ const addProperty = async (req, res) => {
       status,
     });
 
-    // Simpan properti baru ke database
     await newProperty.save();
-
     res.status(201).json({ msg: "Properti berhasil ditambahkan" });
   } catch (err) {
     console.error(err.message);
@@ -95,15 +97,37 @@ const getPropertyById = async (req, res) => {
 const updatePropertyById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, price, location, category, details, capacity, availability, status } = req.body;
+    const {
+      title,
+      description,
+      price,
+      location,
+      category,
+      details,
+      capacity,
+      availability,
+      status,
+    } = req.body;
 
     // Pastikan data tidak kosong
-    if (!title || !description || !price || !location || !category || !details || !capacity || !availability || !status) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !location ||
+      !category ||
+      !details ||
+      !capacity ||
+      !availability ||
+      !status
+    ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
 
     // Temukan dan perbarui properti berdasarkan ID yang diberikan
-    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
 
     // Periksa apakah properti ditemukan
     if (!updatedProperty) {
@@ -111,7 +135,9 @@ const updatePropertyById = async (req, res) => {
     }
 
     // Kirim pesan respons yang menyatakan bahwa data berhasil diperbarui
-    res.status(200).json({ msg: "Properti berhasil diperbarui", updatedProperty });
+    res
+      .status(200)
+      .json({ msg: "Properti berhasil diperbarui", updatedProperty });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Kesalahan server");
@@ -139,5 +165,9 @@ const deletePropertyById = async (req, res) => {
 };
 
 module.exports = {
-  getAllProperties, addProperty, getPropertyById, updatePropertyById, deletePropertyById
+  getAllProperties,
+  addProperty,
+  getPropertyById,
+  updatePropertyById,
+  deletePropertyById,
 };

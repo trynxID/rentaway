@@ -1,5 +1,5 @@
 const User = require("../models/users");
-require("dotenv").config(); // Memastikan dotenv dikonfigurasi dengan benar
+require("dotenv").config();
 const { validationResult, check } = require("express-validator");
 
 const addUser = [
