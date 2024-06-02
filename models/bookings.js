@@ -57,7 +57,7 @@ bookingSchema.pre("save", async function (next) {
     throw new Error("Properti tidak ditemukan");
   }
 
-  booking.update_time = Date.now();
+  booking.update_time = getCurrentTime;
   next();
 });
 
