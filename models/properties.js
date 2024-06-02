@@ -127,7 +127,7 @@ const propertySchema = new mongoose.Schema(
 );
 
 propertySchema.pre("save", function (next) {
-  this.updated_at = Date.now();
+  this.updated_at = getCurrentTime;
   next();
 });
 
