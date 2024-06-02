@@ -1,11 +1,12 @@
 const multer = require("multer");
+const { getFormatTime } = require("./time");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/members/images");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, getFormatTime + "-" + file.originalname);
   },
 });
 

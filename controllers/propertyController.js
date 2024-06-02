@@ -75,18 +75,12 @@ const addProperty = async (req, res) => {
 
 const getPropertyById = async (req, res) => {
   try {
-    // Ambil ID properti dari parameter permintaan
     const { id } = req.params;
-
-    // Temukan properti berdasarkan ID yang diberikan
     const property = await Property.findById(id);
 
-    // Periksa apakah properti ditemukan
     if (!property) {
       return res.status(404).json({ msg: "Properti tidak ditemukan" });
     }
-
-    // Kirim detail properti sebagai respons
     res.status(200).json(property);
   } catch (err) {
     console.error(err.message);
@@ -109,7 +103,6 @@ const updatePropertyById = async (req, res) => {
       status,
     } = req.body;
 
-    // Pastikan data tidak kosong
     if (
       !title ||
       !description ||
@@ -124,17 +117,14 @@ const updatePropertyById = async (req, res) => {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
 
-    // Temukan dan perbarui properti berdasarkan ID yang diberikan
     const updatedProperty = await Property.findByIdAndUpdate(id, req.body, {
       new: true,
     });
 
-    // Periksa apakah properti ditemukan
     if (!updatedProperty) {
       return res.status(404).json({ msg: "Properti tidak ditemukan" });
     }
 
-    // Kirim pesan respons yang menyatakan bahwa data berhasil diperbarui
     res
       .status(200)
       .json({ msg: "Properti berhasil diperbarui", updatedProperty });

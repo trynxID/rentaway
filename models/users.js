@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { getCurrentTime } = require("../utils/time");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -33,6 +34,14 @@ const UserSchema = new mongoose.Schema(
       enum: [1, 2, 3, 4],
       default: 1,
       required: true,
+    },
+    created_at: {
+      type: Date,
+      default: getCurrentTime,
+    },
+    updated_at: {
+      type: Date,
+      default: getCurrentTime,
     },
   },
   { collection: "users" }

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { getCurrentTime } = require("../utils/time");
 const bookingSchema = new mongoose.Schema(
   {
     user: {
@@ -25,17 +25,17 @@ const bookingSchema = new mongoose.Schema(
     },
     status: {
       type: Number,
-      enum: [0, 1, 2], // 0: cancelled, 1: pending, 2: confirmed
+      enum: [0, 1, 2],
       default: 1,
       required: true,
     },
     created_at: {
       type: Date,
-      default: Date.now,
+      default: getCurrentTime,
     },
     updated_at: {
       type: Date,
-      default: Date.now,
+      default: getCurrentTime,
     },
   },
   { collection: "bookings" }

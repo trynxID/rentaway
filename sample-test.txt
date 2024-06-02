@@ -154,3 +154,33 @@ dibawah ini untuk ngetes add properties lewat thunder client
   "status": "available",
   "userId": "665a799f48c71414f937f4c1" // Ganti dengan ID pengguna yang sesuai
 }
+{
+  "title": "Rumah Indah di Pinggir Pantai",
+  "description": "Sebuah rumah yang terletak di tepi pantai dengan pemandangan laut yang menakjubkan.",
+  "price": 2000000000,
+  "location": {
+    "street": "Jalan Pantai Indah",
+    "village": "Desa Bahagia",
+    "district": "Kecamatan Pantai Cerah",
+    "city": "Kota Sejati",
+    "province": "Provinsi Santai",
+    "country": "Indonesia"
+  },
+  "images": [
+    "http://example.com/images/property1.jpg",
+    "http://example.com/images/property2.jpg"
+  ],
+  "category": "house",
+  "details": {
+    "size": 3000,
+    "bedrooms": 4,
+    "bathrooms": 3,
+    "facilities": ["Kolam Renang", "Garasi", "Taman"]
+  },
+  "capacity": 8,
+  "availability": {
+    "availableFrom": "2024-06-01",
+    "availableUntil": "2024-12-31"
+  },
+  "status": "available"
+}

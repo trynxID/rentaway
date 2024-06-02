@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { getCurrentTime } = require("../utils/time");
 
 const propertySchema = new mongoose.Schema(
   {
@@ -109,17 +110,17 @@ const propertySchema = new mongoose.Schema(
         },
         created_at: {
           type: Date,
-          default: Date.now,
+          default: getCurrentTime,
         },
       },
     ],
     created_at: {
       type: Date,
-      default: Date.now,
+      default: getCurrentTime,
     },
     updated_at: {
       type: Date,
-      default: Date.now,
+      default: getCurrentTime,
     },
   },
   { collection: "properties" }
