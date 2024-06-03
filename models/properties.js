@@ -76,16 +76,6 @@ const propertySchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    availability: {
-      availableFrom: {
-        type: Date,
-        required: true,
-      },
-      availableUntil: {
-        type: Date,
-        required: true,
-      },
-    },
     status: {
       type: String,
       enum: ["available", "unavailable", "under_maintenance"],

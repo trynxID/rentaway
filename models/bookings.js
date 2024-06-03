@@ -1,66 +1,61 @@
 const mongoose = require("mongoose");
-const { getCurrentTime } = require("../utils/time");
-const bookingSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    property: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Property",
-      required: true,
-    },
-    start_date: {
-      type: Date,
-      required: true,
-    },
-    end_date: {
-      type: Date,
-      required: true,
-    },
-    total_amount: {
-      type: Number,
-    },
-    status: {
-      type: Number,
-      enum: [0, 1, 2],
-      default: 1,
-      required: true,
-    },
-    created_at: {
-      type: Date,
-      default: getCurrentTime,
-    },
-    updated_at: {
-      type: Date,
-      default: getCurrentTime,
-    },
+const { getCurrentTime, calculateEndDate } = require("../utils/time");
+const Property = require("./properties");
+
+const BookingSchema = new mongoose.Schema({
+  property: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Property",
+    required: true,
   },
-  { collection: "bookings" }
-);
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  start_date: {
+    type: Date,
+    required: true,
+  },
+  end_date: {
+    type: Date,
+  },
+  total_price: {
+    type: Number,
+  },
+  booking_status: {
+    type: String,
+    enum: ["pending", "accepted", "rejected"],
+    default: "pending",
+    required: true,
+  },
+  duration_in_months: {
+    type: Number,
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    default: getCurrentTime,
+  },
+  updated_at: {
+    type: Date,
+    default: getCurrentTime,
+  },
+});
 
-bookingSchema.pre("save", async function (next) {
-  const booking = this;
-  const oneMonth = 1000 * 60 * 60 * 24 * 30;
-  const durationInMonths = Math.ceil(
-    (booking.end_date - booking.start_date) / oneMonth
-  );
-
-  // Temukan properti untuk mendapatkan harga
-  const property = await mongoose.model("Property").findById(booking.property);
-
-  if (property) {
-    booking.total_amount = durationInMonths * property.price;
-  } else {
-    throw new Error("Properti tidak ditemukan");
+BookingSchema.pre("save", async function (next) {
+  if (this.start_date && this.duration_in_months) {
+    this.end_date = calculateEndDate(this.start_date, this.duration_in_months);
   }
 
-  booking.update_time = getCurrentTime;
+  const property = await Property.findById(this.property);
+  if (property && property.price) {
+    this.total_price = property.price * this.duration_in_months;
+  }
+
   next();
 });
 
-const Booking = mongoose.model("Booking", bookingSchema);
+const Booking = mongoose.model("Booking", BookingSchema);
 
 module.exports = Booking;
