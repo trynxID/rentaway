@@ -1,19 +1,10 @@
 const mongoose = require("mongoose");
-const { getCurrentTimeGMT7 } = require("../utils/time");
+const { getCurrentTime } = require("../utils/time");
 
 const TransactionSchema = new mongoose.Schema({
   booking: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Booking",
-    required: true,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  amount: {
-    type: Number,
     required: true,
   },
   payment_method: {
@@ -23,7 +14,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   transaction_date: {
     type: String,
-    default: getCurrentTimeGMT7,
+    default: getCurrentTime,
   },
   status: {
     type: String,
