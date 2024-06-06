@@ -3,11 +3,6 @@ const { getCurrentTime } = require("../utils/time");
 
 const propertySchema = new mongoose.Schema(
   {
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     title: {
       type: String,
       required: true,
@@ -49,36 +44,50 @@ const propertySchema = new mongoose.Schema(
         type: String,
       },
     ],
-    category: {
-      type: String,
-      enum: ["apartment", "house", "kost"],
-      required: true,
-    },
+    occupant: [
+      {
+        type: String,
+        enum: ["Man Only", "Women Only", "Mixed"],
+      },
+    ],
     details: {
       size: {
-        type: Number,
-      },
-      bedrooms: {
-        type: Number,
+        type: String,
         required: true,
       },
       bathrooms: {
-        type: Number,
+        type: String,
+        enum: ["inside", "outside"],
         required: true,
       },
       facilities: [
         {
-          type: String,
+          furnished: {
+            type: Boolean,
+            default: false,
+          },
+          wifi: {
+            type: Boolean,
+            default: false,
+          },
+          ac: {
+            type: Boolean,
+            default: false,
+          },
+          kitchen: {
+            type: Boolean,
+            default: false,
+          },
         },
       ],
     },
-    capacity: {
+    stocks: {
       type: Number,
       required: true,
     },
     status: {
       type: String,
-      enum: ["available", "unavailable", "under_maintenance"],
+      enum: ["available", "unavailable"],
       default: "available",
       required: true,
     },

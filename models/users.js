@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: Number,
-      enum: [1, 2, 3, 4],
+      enum: [1, 2, 3],
       default: 1,
       required: true,
     },
@@ -47,7 +47,6 @@ const UserSchema = new mongoose.Schema(
   { collection: "users" }
 );
 
-// Hash password before saving
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
