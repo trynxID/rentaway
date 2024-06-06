@@ -1,4 +1,6 @@
 const User = require("../models/users");
+const { validationResult, check } = require("express-validator");
+
 const getAllUser = async (req, res) => {
   const users = await User.find();
   res.status(200);
