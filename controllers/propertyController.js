@@ -16,10 +16,12 @@ const addProperty = async (req, res) => {
     title,
     description,
     price,
+    images,
     location,
     occupant,
     details,
     stocks,
+    rating,
   } = req.body;
 
   try {
@@ -34,8 +36,10 @@ const addProperty = async (req, res) => {
     ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
-        
-    const images = req.files.map(file => `/uploads/property/images/${file.filename}`);
+
+    // const images = req.files.map(
+    //   (file) => `/uploads/property/images/${file.filename}`
+    // );
 
     const newProperty = new Property({
       title,
@@ -46,6 +50,7 @@ const addProperty = async (req, res) => {
       occupant,
       details,
       stocks,
+      rating,
     });
 
     await newProperty.save();
@@ -97,8 +102,10 @@ const updatePropertyById = async (req, res) => {
     return res.status(400).json({ msg: "Semua data harus diisi" });
   }
 
-  try {    
-    const images = req.files.map(file => `/uploads/property/images/${file.filename}`);
+  try {
+    const images = req.files.map(
+      (file) => `/uploads/property/images/${file.filename}`
+    );
 
     const updatedProperty = await Property.findByIdAndUpdate(
       id,
@@ -120,7 +127,9 @@ const updatePropertyById = async (req, res) => {
       return res.status(404).json({ msg: "Properti tidak ditemukan" });
     }
 
-    res.status(200).json({ msg: "Properti berhasil diperbarui", updatedProperty });
+    res
+      .status(200)
+      .json({ msg: "Properti berhasil diperbarui", updatedProperty });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Kesalahan server");

@@ -43,12 +43,11 @@ const propertySchema = new mongoose.Schema(
         type: String,
       },
     ],
-    occupant: [
-      {
-        type: String,
-        enum: ["Pria", "Wanita", "Campur"],
-      },
-    ],
+    occupant: {
+      type: String,
+      enum: ["Pria", "Wanita", "Campur"],
+    },
+
     details: {
       size: {
         type: String,
