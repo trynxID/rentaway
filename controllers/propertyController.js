@@ -3,8 +3,7 @@ const { validationResult } = require("express-validator");
 
 const getAllProperties = async (req, res) => {
   const properties = await Property.find();
-  res.status(200);
-  res.json(properties);
+  res.status(200).json(properties);
 };
 
 const addProperty = async (req, res) => {
@@ -18,7 +17,6 @@ const addProperty = async (req, res) => {
     description,
     price,
     location,
-    images,
     occupant,
     details,
     stocks,
@@ -38,6 +36,8 @@ const addProperty = async (req, res) => {
     ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
+        
+    const images = req.files.map(file => `/uploads/property/images/${file.filename}`);
 
     const newProperty = new Property({
       title,
@@ -75,44 +75,55 @@ const getPropertyById = async (req, res) => {
 };
 
 const updatePropertyById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      title,
-      description,
-      price,
-      location,
-      images,
-      occupant,
-      details,
-      stocks,
-      status,
-    } = req.body;
+  const { id } = req.params;
+  const {
+    title,
+    description,
+    price,
+    location,
+    occupant,
+    details,
+    stocks,
+    status,
+  } = req.body;
 
-    if (
-      !title ||
-      !description ||
-      !price ||
-      !location ||
-      !stocks ||
-      !details ||
-      !occupant ||
-      !status
-    ) {
-      return res.status(400).json({ msg: "Semua data harus diisi" });
-    }
+  if (
+    !title ||
+    !description ||
+    !price ||
+    !location ||
+    !stocks ||
+    !details ||
+    !occupant ||
+    !status
+  ) {
+    return res.status(400).json({ msg: "Semua data harus diisi" });
+  }
 
-    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+  try {    
+    const images = req.files.map(file => `/uploads/property/images/${file.filename}`);
+
+    const updatedProperty = await Property.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        price,
+        location,
+        images,
+        occupant,
+        details,
+        stocks,
+        status,
+      },
+      { new: true }
+    );
 
     if (!updatedProperty) {
       return res.status(404).json({ msg: "Properti tidak ditemukan" });
     }
 
-    res
-      .status(200)
-      .json({ msg: "Properti berhasil diperbarui", updatedProperty });
+    res.status(200).json({ msg: "Properti berhasil diperbarui", updatedProperty });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Kesalahan server");
