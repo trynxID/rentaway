@@ -9,7 +9,7 @@ const uploadProfileImage = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).json({ msg: 'Pengguna tidak ditemukan' });
+      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
     }
 
     user.img_url = `/images/members/${req.file.filename}`;
@@ -23,11 +23,14 @@ const uploadProfileImage = async (req, res) => {
 };
 
 const updateUser = [
-  check('fullname', 'Nama lengkap tidak boleh kosong').notEmpty(),
-  check('email', 'Email harus valid').isEmail(),
-  check('no_phone', 'Nomor telepon harus dalam format Indonesia dan tidak boleh kosong')
-    .isMobilePhone('id-ID')
-    .withMessage('Nomor telepon harus dalam format Indonesia'),
+  check("fullname", "Nama lengkap tidak boleh kosong").notEmpty(),
+  check("email", "Email harus valid").isEmail(),
+  check(
+    "no_phone",
+    "Nomor telepon harus dalam format Indonesia dan tidak boleh kosong"
+  )
+    .isMobilePhone("id-ID")
+    .withMessage("Nomor telepon harus dalam format Indonesia"),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,34 +41,36 @@ const updateUser = [
 
     try {
       let user = await User.findById(req.params.id);
-      
+
       if (!user) {
-        return res.status(404).json({ msg: 'Pengguna tidak ditemukan' });
+        return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
       }
-      
+
       user.fullname = fullname;
       user.email = email;
       user.no_phone = no_phone;
 
       await user.save();
-      
+
       const payload = {
         id: user._id,
         user: user.fullname,
         email: user.email,
         no_phone: user.no_phone,
         role: user.role,
-        img_url: user.img_url
+        img_url: user.img_url,
       };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
 
       res.json({ token });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Kesalahan server');
+      res.status(500).send("Kesalahan server");
     }
-  }
+  },
 ];
 
 const logoutAndUpdateLastLogin = async (req, res) => {
@@ -78,20 +83,19 @@ const logoutAndUpdateLastLogin = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json({ msg: 'Pengguna tidak ditemukan' });
+      return res.status(404).json({ msg: "Pengguna tidak ditemukan" });
     }
 
-    res.json({ msg: 'Logout berhasil' });
+    res.json({ msg: "Logout berhasil" });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Kesalahan server');
+    res.status(500).send("Kesalahan server");
   }
 };
-
 
 module.exports = {
   getAllUser,
   uploadProfileImage,
   updateUser,
-  logoutAndUpdateLastLogin
+  logoutAndUpdateLastLogin,
 };

@@ -23,12 +23,6 @@ const BookingSchema = new mongoose.Schema({
   total_price: {
     type: Number,
   },
-  booking_status: {
-    type: String,
-    enum: ["pending", "accepted", "rejected"],
-    default: "pending",
-    required: true,
-  },
   duration_in_months: {
     type: Number,
     required: true,
@@ -40,6 +34,10 @@ const BookingSchema = new mongoose.Schema({
   updated_at: {
     type: Date,
     default: getCurrentTime,
+  },
+  status: {
+    type: String,
+    enum: ["cancelled", "pending", "success"],
   },
 });
 

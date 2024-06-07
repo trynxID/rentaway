@@ -13,7 +13,6 @@ const propertySchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
     },
     location: {
       street: {
@@ -127,6 +126,7 @@ const propertySchema = new mongoose.Schema(
 
 propertySchema.pre("save", function (next) {
   this.updated_at = getCurrentTime;
+  this.price = this.price * 1.05;
   next();
 });
 
