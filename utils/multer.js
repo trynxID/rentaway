@@ -1,15 +1,28 @@
 const multer = require("multer");
 const { getFormatTime } = require("./time");
 
-const storage = multer.diskStorage({
+const storageProfile = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/members/images");
+    cb(null, "public/members/images");
   },
   filename: function (req, file, cb) {
     cb(null, getFormatTime + "-" + file.originalname);
   },
 });
 
-const upload = multer({ storage: storage });
+const storageProperty = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/property/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, getFormatTime() + "-" + file.originalname);
+  },
+});
 
-module.exports = upload;
+const uploadProfile = multer({ storage: storageProfile });
+const uploadProperty = multer({ storage: storageProperty });
+
+module.exports = {
+  uploadProfile,
+  uploadProperty,
+};
