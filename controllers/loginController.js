@@ -26,6 +26,8 @@ const auth = async (req, res) => {
       id: user._id,
       user: user.fullname,
       email: user.email,
+      no_phone: user.no_phone,
+      img_url: user.img_url,
       role: user.role,
     };
 
@@ -35,7 +37,7 @@ const auth = async (req, res) => {
 
     jwt.sign(payload, secret, { expiresIn }, (err, token) => {
       if (err) throw err;
-      res.json({ token });
+      res.json({ token, role: user.role });
     });
   } catch (err) {
     console.error(err.message);
