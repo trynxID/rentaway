@@ -1,9 +1,6 @@
 const User = require("../models/users");
 const { validationResult } = require("express-validator");
-const {
-  userValidationUpdate,
-  userValidationUpdate,
-} = require("../utils/validation");
+const { userValidationUpdate } = require("../utils/validation");
 
 const getAllUser = async (req, res) => {
   const users = await User.find();
@@ -29,7 +26,7 @@ const uploadProfileImage = async (req, res) => {
 };
 
 const updateUser = [
-  ...userValidationUpdate(),
+  userValidationUpdate(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
