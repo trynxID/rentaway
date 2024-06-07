@@ -1,19 +1,10 @@
 const User = require("../models/users");
 require("dotenv").config();
-const { validationResult, check } = require("express-validator");
+const { validationResult } = require("express-validator");
+const { userValidationRules } = require("../utils/validation");
 
 const addUser = [
-  check("fullname", "Nama lengkap diperlukan").not().isEmpty(),
-  check("email", "Email tidak valid dan wajib diisi")
-    .isEmail()
-    .normalizeEmail(),
-  check("password", "Kata sandi diperlukan").not().isEmpty(),
-  check(
-    "no_phone",
-    "Nomor telepon harus dalam format Indonesia dan tidak boleh kosong"
-  )
-    .isMobilePhone("id-ID")
-    .withMessage("Nomor telepon harus dalam format Indonesia"),
+  ...userValidationRules(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
