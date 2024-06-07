@@ -59,59 +59,30 @@ const propertySchema = new mongoose.Schema(
         enum: ["Dalam", "Luar"],
         required: true,
       },
-      facilities: [
-        {
-          furnished: {
-            type: Boolean,
-            default: false,
-          },
-          wifi: {
-            type: Boolean,
-            default: false,
-          },
-          ac: {
-            type: Boolean,
-            default: false,
-          },
-          kitchen: {
-            type: Boolean,
-            default: false,
-          },
-        },
-      ],
+      furnished: {
+        type: Boolean,
+        default: false,
+      },
+      wifi: {
+        type: Boolean,
+        default: false,
+      },
+      ac: {
+        type: Boolean,
+        default: false,
+      },
+      kitchen: {
+        type: Boolean,
+        default: false,
+      },
     },
     stocks: {
       type: Number,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["available", "unavailable"],
-      default: "available",
-      required: true,
+    rating: {
+      type: Number,
     },
-    reviews: [
-      {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        rating: {
-          type: Number,
-          required: true,
-          min: 1,
-          max: 5,
-        },
-        comment: {
-          type: String,
-        },
-        created_at: {
-          type: Date,
-          default: getCurrentTime,
-        },
-      },
-    ],
     created_at: {
       type: Date,
       default: getCurrentTime,
@@ -120,6 +91,10 @@ const propertySchema = new mongoose.Schema(
       type: Date,
       default: getCurrentTime,
     },
+    status: {
+      type: String,
+      enum: ["Tersedia", "Habis"],
+    },
   },
   { collection: "properties" }
 );
@@ -127,6 +102,11 @@ const propertySchema = new mongoose.Schema(
 propertySchema.pre("save", function (next) {
   this.updated_at = getCurrentTime;
   this.price = this.price * 1.05;
+  if (this.stocks > 0) {
+    this.status = "Tersedia";
+  } else {
+    this.status = "Habis";
+  }
   next();
 });
 

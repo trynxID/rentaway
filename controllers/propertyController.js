@@ -22,7 +22,6 @@ const addProperty = async (req, res) => {
     occupant,
     details,
     stocks,
-    status,
   } = req.body;
 
   try {
@@ -33,8 +32,7 @@ const addProperty = async (req, res) => {
       !location ||
       !stocks ||
       !details ||
-      !occupant ||
-      !status
+      !occupant
     ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
@@ -48,7 +46,6 @@ const addProperty = async (req, res) => {
       occupant,
       details,
       stocks,
-      status,
     });
 
     await newProperty.save();
