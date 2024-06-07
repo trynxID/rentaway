@@ -1,4 +1,10 @@
 const User = require("../models/users");
+const { validationResult } = require("express-validator");
+const {
+  userValidationUpdate,
+  userValidationUpdate,
+} = require("../utils/validation");
+
 const getAllUser = async (req, res) => {
   const users = await User.find();
   res.status(200);
@@ -23,14 +29,7 @@ const uploadProfileImage = async (req, res) => {
 };
 
 const updateUser = [
-  check("fullname", "Nama lengkap tidak boleh kosong").notEmpty(),
-  check("email", "Email harus valid").isEmail(),
-  check(
-    "no_phone",
-    "Nomor telepon harus dalam format Indonesia dan tidak boleh kosong"
-  )
-    .isMobilePhone("id-ID")
-    .withMessage("Nomor telepon harus dalam format Indonesia"),
+  ...userValidationUpdate(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

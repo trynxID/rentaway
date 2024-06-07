@@ -46,7 +46,7 @@ const propertySchema = new mongoose.Schema(
     occupant: [
       {
         type: String,
-        enum: ["Man Only", "Women Only", "Mixed"],
+        enum: ["Pria", "Wanita", "Campur"],
       },
     ],
     details: {
@@ -56,7 +56,7 @@ const propertySchema = new mongoose.Schema(
       },
       bathrooms: {
         type: String,
-        enum: ["inside", "outside"],
+        enum: ["Dalam", "Luar"],
         required: true,
       },
       facilities: [
