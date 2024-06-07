@@ -9,7 +9,7 @@ const TransactionSchema = new mongoose.Schema({
   },
   payment_method: {
     type: String,
-    enum: ["bank_transfer", "e_wallet"],
+    enum: ["Transfer", "ShopeePay", "GoPay", "DANA"],
     required: true,
   },
   transaction_date: {
