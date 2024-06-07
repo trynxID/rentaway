@@ -39,7 +39,7 @@ const addProperty = async (req, res) => {
     let images = [];
     if (req.files && req.files.length > 0) {
       images = req.files.map(
-        (file) => `/uploads/property/images/${file.filename}`
+        (file) => `/public/property/images/${file.filename}`
       );
     } else {
       images = ["default.jpg"];
@@ -108,7 +108,7 @@ const updatePropertyById = async (req, res) => {
 
   try {
     let images = req.files.map(
-      (file) => `/uploads/property/images/${file.filename}`
+      (file) => `/public/property/images/${file.filename}`
     );
 
     const updatedProperty = await Property.findByIdAndUpdate(
