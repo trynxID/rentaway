@@ -1,5 +1,4 @@
 const Property = require("../models/properties");
-const User = require("../models/users");
 const { validationResult } = require("express-validator");
 
 const getAllProperties = async (req, res) => {
@@ -14,17 +13,15 @@ const addProperty = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const owner = req.user.id;
   const {
     title,
     description,
     price,
     location,
     images,
-    category,
+    occupant,
     details,
-    capacity,
-    availability,
+    stocks,
     status,
   } = req.body;
 
@@ -34,34 +31,23 @@ const addProperty = async (req, res) => {
       !description ||
       !price ||
       !location ||
-      !category ||
+      !stocks ||
       !details ||
-      !capacity ||
-      !availability ||
+      !occupant ||
       !status
     ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
 
-    const user = await User.findById(owner);
-    if (!user || user.role !== 2) {
-      return res
-        .status(403)
-        .json({ msg: "Anda tidak memiliki izin untuk menambahkan properti" });
-    }
-
-    // Buat properti baru
     const newProperty = new Property({
-      owner,
       title,
       description,
       price,
       location,
       images,
-      category,
+      occupant,
       details,
-      capacity,
-      availability,
+      stocks,
       status,
     });
 
@@ -96,10 +82,10 @@ const updatePropertyById = async (req, res) => {
       description,
       price,
       location,
-      category,
+      images,
+      occupant,
       details,
-      capacity,
-      availability,
+      stocks,
       status,
     } = req.body;
 
@@ -108,10 +94,9 @@ const updatePropertyById = async (req, res) => {
       !description ||
       !price ||
       !location ||
-      !category ||
+      !stocks ||
       !details ||
-      !capacity ||
-      !availability ||
+      !occupant ||
       !status
     ) {
       return res.status(400).json({ msg: "Semua data harus diisi" });
