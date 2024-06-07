@@ -16,7 +16,6 @@ const addProperty = async (req, res) => {
     title,
     description,
     price,
-    images,
     location,
     occupant,
     details,
@@ -37,9 +36,14 @@ const addProperty = async (req, res) => {
       return res.status(400).json({ msg: "Semua data harus diisi" });
     }
 
-    // const images = req.files.map(
-    //   (file) => `/uploads/property/images/${file.filename}`
-    // );
+    let images = [];
+    if (req.files && req.files.length > 0) {
+      images = req.files.map(
+        (file) => `/uploads/property/images/${file.filename}`
+      );
+    } else {
+      images = ["default.jpg"];
+    }
 
     const newProperty = new Property({
       title,
@@ -103,7 +107,7 @@ const updatePropertyById = async (req, res) => {
   }
 
   try {
-    const images = req.files.map(
+    let images = req.files.map(
       (file) => `/uploads/property/images/${file.filename}`
     );
 
