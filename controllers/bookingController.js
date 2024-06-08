@@ -17,12 +17,14 @@ const addBooking = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  const { property, user, start_date, duration_in_months } = req.body;
+  const user = req.user.id;
+  const { property } = req.params;
+  const { start_date, duration_in_months } = req.body;
+  console.log(property);
 
   try {
-    const propertyObj = await Property.findById(property);
-    if (!propertyObj) {
+    const findProperty = await Property.findById(property);
+    if (!findProperty) {
       return res.status(400).json({ msg: "Properti tidak ditemukan" });
     }
 
