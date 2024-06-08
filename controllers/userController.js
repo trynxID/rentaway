@@ -26,7 +26,7 @@ const uploadProfileImage = async (req, res) => {
 };
 
 const updateUser = [
-  userValidationUpdate(),
+  ...userValidationUpdate(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -12,7 +12,7 @@ const storageProfile = multer.diskStorage({
 
 const storageProperty = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/property/images");
+    cb(null, "public/property/images");
   },
   filename: function (req, file, cb) {
     cb(null, getFormatTime() + "-" + file.originalname);
